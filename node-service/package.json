@@ -1,0 +1,20 @@
+{
+  "name": "remy-test-bed-node-service",
+  "version": "1.0.0",
+  "description": "Small Node service with intentionally pinned vulnerable dependencies for testing Snyk Remediation Agent.",
+  "main": "src/index.js",
+  "private": true,
+  "scripts": {
+    "start": "node src/index.js",
+    "test": "node --test test/service.test.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "lodash": "4.17.15",
+    "minimist": "1.2.5",
+    "node-fetch": "2.6.0",
+    "jsonwebtoken": "8.5.1"
+  }
+}
