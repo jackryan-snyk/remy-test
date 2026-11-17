@@ -5,7 +5,7 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>com.example</groupId>
-  <artifactId>remy-test-bed-java-service</artifactId>
+  <artifactId>remy-test-java-service</artifactId>
   <version>1.0.0</version>
   <packaging>jar</packaging>
   <description>Small Maven module with intentionally pinned vulnerable dependencies for testing Snyk Remediation Agent.</description>

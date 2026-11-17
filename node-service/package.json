@@ -1,5 +1,5 @@
 {
-  "name": "remy-test-bed-node-service",
+  "name": "remy-test-node-service",
   "version": "1.0.0",
   "description": "Small Node service with intentionally pinned vulnerable dependencies for testing Snyk Remediation Agent.",
   "main": "src/index.js",

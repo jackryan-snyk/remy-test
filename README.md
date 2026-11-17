@@ -19,7 +19,7 @@ Both test suites pass on a clean tree, and CI runs them on every PR so the agent
 
 ## Seeded vulnerable dependencies
 
-Node results are from `snyk test --all-projects` on 17 Nov 2026 (14 issues). Java rows are expected values until the Maven project is scanned.
+Results are from `snyk test --all-projects` on 17 Nov 2026: 14 issues in node-service, 5 vulnerabilities plus 1 license issue in java-service.
 
 | Module | Package | Pinned | Fix | Issues (severity) | Expected breakability |
 |---|---|---|---|---|---|
@@ -27,13 +27,13 @@ Node results are from `snyk test --all-projects` on 17 Nov 2026 (14 issues). Jav
 | node-service | `node-fetch` | 2.6.0 | 2.6.7 (patch) | 2 (medium) | Low |
 | node-service | `minimist` | 1.2.5 | 1.2.6 (patch) | 1 (low) | Low |
 | node-service | `jsonwebtoken` | 8.5.1 | 9.0.0 (major) | 3 (medium) | High |
-| java-service | `commons-collections:commons-collections` | 3.2.1 | 3.2.2 (patch) | TBC | Low |
-| java-service | `c3p0:c3p0` | 0.9.1.2 | `com.mchange:c3p0` 0.9.5.x (groupId change) | TBC (XXE) | High |
+| java-service | `commons-collections:commons-collections` | 3.2.1 | 3.2.2 (patch) | 3 (critical) | Low |
+| java-service | `c3p0:c3p0` | 0.9.1.2 | None as an upgrade; needs a move to `com.mchange:c3p0` 0.9.5.x | 2 (1 critical XXE, 1 high DoS) + LGPL-3.0 license | High |
 
-The c3p0 entry mirrors Jira ticket NGP-1376 (XXE in `c3p0:c3p0@0.9.1.2`).
+The c3p0 entry mirrors Jira ticket NGP-1376 (XXE in `c3p0:c3p0@0.9.1.2`). Snyk reports it as **no direct upgrade or patch**, because the fixed versions are published under a different groupId. It is the test case for whether the agent can do a coordinate migration rather than a version bump.
 
 **Campaign filters change what you'll see:**
-- With `severity_filter: ["critical", "high"]`, only the lodash highs and the Java findings are in scope. `jsonwebtoken`, `node-fetch` and `minimist` have no high or critical issues, so they are filtered out before breakability matters.
+- With `severity_filter: ["critical", "high"]`, 10 issues are in scope: 5 lodash highs, 3 commons-collections criticals and 2 c3p0 findings. That exactly matches the daily fix cap. `jsonwebtoken`, `node-fetch` and `minimist` have no high or critical issues, so they are filtered out before breakability matters.
 - To exercise the high-breakability hold-back on Node, include `medium` in the severity filter so `jsonwebtoken` is in scope.
 - Count issues against the daily fix cap of 10: all severities on Node alone is 14 issues.
 
